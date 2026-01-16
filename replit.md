@@ -27,7 +27,6 @@ The frontend follows a component-based architecture with pages in `client/src/pa
 
 Key endpoints:
 - `GET /api/radar/:month/:nation` - Fetches radar model data for a specific month and nation (domestic/import)
-- `GET /api/months` - Returns available months for data selection
 
 ### Data Layer
 - **ORM**: Drizzle ORM with PostgreSQL dialect
@@ -85,3 +84,22 @@ Path aliases configured:
 - `@replit/vite-plugin-runtime-error-modal`: Error overlay in development
 - `@replit/vite-plugin-cartographer`: Development tooling
 - `@replit/vite-plugin-dev-banner`: Development banner
+
+## Netlify Deployment
+
+This project is configured for Netlify deployment with serverless functions.
+
+### Configuration Files
+- `netlify.toml` - Build settings and redirects
+- `netlify/functions/radar.ts` - Serverless function for API
+- `client/public/_redirects` - SPA routing fallback
+
+### Deployment Steps
+1. Connect your GitHub repository to Netlify
+2. Netlify will automatically detect the configuration from `netlify.toml`
+3. Build command: `npx vite build --config vite.config.ts`
+4. Publish directory: `dist/public`
+5. Functions directory: `netlify/functions`
+
+### API Redirect
+The `/api/radar/:month/:nation` endpoint is redirected to the Netlify serverless function at `/.netlify/functions/radar` with query parameters.
